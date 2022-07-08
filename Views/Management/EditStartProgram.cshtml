@@ -1,0 +1,23 @@
+@model DESAFIO.MVC.DTO.StartProgramDTO
+
+<h3>Edit Start Program</h3>
+<hr>
+
+<form class="form-horizontal" asp-controller="StartPrograms" asp-action="Update" method="POST">
+    <input type="hidden" asp-for="Id">
+
+    <label asp-for="Name">Name</label><br>
+    <span asp-validation-for="Name"></span>
+    <input type="text" class="form-control" asp-for="Name" placeholder="Program name">    
+
+    <br><label asp-for="StartDate">Start Date</label><br>
+    <span asp-validation-for="StartDate"></span>
+    <input type="date" class="form-control" asp-for="StartDate" placeholder="DD-MM-YYYY">    
+
+    <br><label asp-for="EndDate">End Date</label><br>
+    <span asp-validation-for="EndDate"></span>
+    <input type="date" class="form-control" asp-for="EndDate" placeholder="DD-MM-YYYY"><br>    
+
+    <button class="btn btn-success">Update</button>
+    <a class="btn btn-primary" href="/Management/StartPrograms">Back</a>  
+</form>

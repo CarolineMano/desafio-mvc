@@ -1,0 +1,42 @@
+@model DESAFIO.MVC.DTO.GroupDTO
+
+<h3>New Team</h3>
+<hr>
+
+<form class="form-horizontal" asp-controller="Groups" asp-action="Save" method="POST">
+    <input type="hidden" asp-for="Id" value="0">
+
+    <label asp-for="TechnologyID">Technology</label><br>
+    <span asp-validation-for="TechnologyID"></span>
+    @if((ViewBag.Technologies as IList<Technology>).Count == 0)
+    {
+        <p>There are no technologies available.</p>
+    }
+    else
+    {
+        <select class="form-control" asp-for="TechnologyID" asp-items='@(new SelectList(@ViewBag.Technologies, "Id", "Name"))'></select>
+    }
+    
+    <br><label asp-for="ScrumMaster">Scrum Master</label><br>
+    <span asp-validation-for="ScrumMaster"></span>
+    @if((ViewBag.ScrumMasters as IList<string>).Count == 0)
+    {
+        <p>There are no Scrum Masters available. Please wait for them to register to the system.</p>
+    }
+    else
+    {
+        <select class="form-control" asp-for="ScrumMaster" asp-items='@(new SelectList(@ViewBag.ScrumMasters))'></select><br>
+    }
+    
+    
+    @if((ViewBag.Technologies as IList<Technology>).Count == 0 || (ViewBag.ScrumMasters as IList<string>).Count == 0)
+    {
+        <button class="btn btn-success" disabled>Add</button>
+    }
+    else
+    {
+        <button class="btn btn-success">Add</button>
+    }
+    <a class="btn btn-primary" href="/Management/Groups">Back</a>    
+
+</form>

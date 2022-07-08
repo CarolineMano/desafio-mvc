@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> SignInManager
+@inject UserManager<IdentityUser> UserManager
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">GFT Start Programs</h1>
+    <p>The management system for all the starters and their main activities</p>
+</div>
+
+<div class="text-center">
+    @if(SignInManager.IsSignedIn(User) && User.FindFirst("UserRole").Value == "admin")
+    {
+        <a class="btn btn-first btn-block" href="/Management/StartPrograms"><i class="fas fa-fw fa-solid fa-play"></i> Start Programs</a> 
+
+        <a class="btn btn-second btn-block" href="/Management/Technologies"><i class="fas fa-fw fa-solid fa-server"></i> Technologies</a>
+
+        <a class="btn btn-third btn-block" href="/Management/Groups"><i class="fas fa-fw fa-solid fa-users"></i> Scrum Teams</a>    
+
+        <a class="btn btn-fourth btn-block" href="/Management/Starters"><i class="fas fa-fw fa-solid fa-child"></i> Starters</a>  
+
+        <a class="btn btn-fifth btn-block" href="/Management/Modules"><i class="fas fa-fw fa-solid fa-stream"></i> Modules</a>  
+
+        <a class="btn btn-sixth btn-block" href="/Management/Projects"><i class="fas fa-fw fa-solid fa-bug"></i> Projects</a> 
+    }
+    @if(SignInManager.IsSignedIn(User))
+    {
+        <a class="btn btn-seventh btn-block" href="/Management/Dailies"><i class="fas fa-fw fa-solid fa-clipboard-list"></i> Dailies Scrum</a>    
+    }  
+</div>      

@@ -1,0 +1,44 @@
+@model DESAFIO.MVC.DTO.ProjectDTO
+
+<h3>Edit Project</h3>
+<hr>
+
+<form class="form-horizontal" asp-controller="Projects" asp-action="Update" method="POST">
+    <input type="hidden" asp-for="Id">
+
+    <label asp-for="ModuleID">Module</label><br>
+    <span asp-validation-for="ModuleID"></span><br>
+    @if((ViewBag.Modules as IList<Module>).Count == 0)
+    {
+        <p>There are no modules available.</p>
+    }
+    else
+    {
+        <select class="form-control" asp-for="ModuleID" asp-items='@(new SelectList(@ViewBag.Modules, "Id", "Name"))'></select>  
+    }
+      
+    <br><label asp-for="StarterID">Starter</label><br>
+    <span asp-validation-for="StarterID"></span><br>
+    @if((ViewBag.Starters as IList<Starter>).Count == 0)
+    {
+        <p>There are no starters available.</p>
+    }
+    else
+    {
+        <select class="form-control" asp-for="StarterID" asp-items='@(new SelectList(@ViewBag.Starters, "Id", "Name"))'></select>    
+    }
+    
+    <br><label asp-for="Grade">Grade</label><br>
+    <span asp-validation-for="Grade"></span>
+    <input type="text" asp-for="Grade" class="form-control" placeholder="0 - 10"><br>
+    
+    @if((ViewBag.Modules as IList<Module>).Count == 0 || (ViewBag.Starters as IList<Starter>).Count == 0)
+    {
+        <button class="btn btn-success" disabled>Update</button>
+    }
+    else
+    {
+        <button class="btn btn-success">Update</button>
+    }    
+    <a class="btn btn-primary" href="/Management/Projects">Back</a>
+</form>

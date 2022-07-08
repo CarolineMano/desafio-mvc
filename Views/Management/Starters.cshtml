@@ -1,0 +1,75 @@
+@model IEnumerable<DESAFIO.MVC.Models.Starter>
+
+<h2>Starters</h2>
+<hr>
+<a asp-controller="Management" asp-action="NewStarter" class="btn btn-success">New Starter</a>
+<hr>
+
+<script>
+    $(document).ready( function () 
+    {
+        $('#starters').DataTable();
+    });
+</script>
+
+<table id="starters" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Starter Name</th>
+            <th>4 Letters</th>
+            <th>Start Program</th>
+            <th>Technology</th>
+            <th>Scrum Master</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var starter in Model)
+        {
+            <tr>
+                <td>@starter.Id</td>
+                <td>
+                    <img src="~/Images/@starter.ImageName"   
+                         class="rounded-circle"   
+                         height="50" width="50"   
+                         asp-append-version="true" /><br>  
+                    @starter.Name
+                </td>
+                <td>@starter.FourCharacters</td>
+                @if(starter.StartProgram.Status == false)
+                {
+                    <td class="redtext">@starter.StartProgram.Name</td>
+                }
+                else
+                {
+                    <td>@starter.StartProgram.Name</td>
+                }
+                @if(starter.Group.Technology.Status == false)
+                {
+                    <td class="redtext">@starter.Group.Technology.Name</td>
+                }
+                else
+                {
+                    <td>@starter.Group.Technology.Name</td>
+                }
+                @if(starter.Group.Status == false)
+                {
+                    <td class="redtext">@starter.Group.ScrumMaster</td>
+                }
+                else
+                {
+                    <td>@starter.Group.ScrumMaster</td>
+                }
+                
+                <td>
+                    <a class="btn btn-primary" href="/Management/EditStarter/@starter.Id">Edit</a>                                                                   
+                    <form asp-action="Delete" asp-controller="Starters" style="display: inline;">
+                        <input type="hidden" name="id" id="id" value="@starter.Id">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

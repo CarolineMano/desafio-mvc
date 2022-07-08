@@ -1,0 +1,65 @@
+@model DESAFIO.MVC.DTO.DailyDTO
+
+<h2>Edit Daily Scrum</h2>
+<hr>
+
+<form class="form-horizontal" asp-controller="Dailies" asp-action="Update" method="POST">
+    <input type="hidden" asp-for="Id">
+
+    <label asp-for="Date">Daily Scrum Date</label><br>
+    <span asp-validation-for="Date"></span>
+    <input type="date" class="form-control" asp-for="Date" placeholder="DD-MM-YYYY">    
+
+    <br><label asp-for="StarterID">Starter</label><br>
+    <span asp-validation-for="StarterID"></span>
+    @if((ViewBag.Starters as IList<Starter>).Count == 0)
+    {
+        <p>There are no starters available.</p>
+    }
+    else
+    {
+        <select class="form-control" asp-for="StarterID" asp-items='@(new SelectList(@ViewBag.Starters, "Id", "Name"))'></select>    
+    }    
+
+    <br><label asp-for="ModuleID">Module</label><br>
+    <span asp-validation-for="ModuleID"></span>
+    @if((ViewBag.Modules as IList<Module>).Count == 0)
+    {
+        <p>There are no modules available.</p>
+    }
+    else
+    {
+        <select class="form-control" asp-for="ModuleID" asp-items='@(new SelectList(@ViewBag.Modules, "Id", "Name"))'></select>
+    }   
+    
+    <br><label asp-for="TasksDoing">Tasks on progress</label><br>
+    <span asp-validation-for="TasksDoing"></span>
+    <input type="text" class="form-control" asp-for="TasksDoing" placeholder="Description of tasks"><br>    
+
+    <br><label asp-for="TasksDone">Tasks completed</label><br>
+    <span asp-validation-for="TasksDone"></span>
+    <input type="text" class="form-control" asp-for="TasksDone" placeholder="Description of tasks"><br>    
+
+    <br><label asp-for="Impediments">Impediments</label><br>
+    <span asp-validation-for="Impediments"></span>
+    <input type="text" class="form-control" asp-for="Impediments" placeholder="Description of impediments"><br>    
+
+    <br><label asp-for="Presence">Attendance</label><br>
+    <span asp-validation-for="Presence"></span>
+    <select class="form-control" asp-for="Presence">
+        <option value="0">Absent</option>
+        <option value="1">Late</option>
+        <option value="2">On time</option>
+    </select><br>   
+
+    @if((ViewBag.Starters as IList<Starter>).Count == 0 || (ViewBag.Modules as IList<Module>).Count == 0)
+    {
+        <button class="btn btn-success" disabled>Update</button>
+    }
+    else
+    {
+        <button class="btn btn-success">Update</button>
+    }
+    
+    <a class="btn btn-primary" href="/Management/Dailies">Back</a>
+</form>

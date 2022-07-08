@@ -1,0 +1,101 @@
+@model IEnumerable<DESAFIO.MVC.Models.Daily>
+
+<h2>Daily Scrum</h2>
+<hr>
+<a asp-controller="Management" asp-action="NewDaily" class="btn btn-success">New Daily Scrum</a>
+<hr>
+
+<script>
+    $(document).ready( function () 
+    {
+        $('#dailies').DataTable();
+    });
+</script>
+
+<table id="dailies" class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Starter Name</th>
+            <th>Scrum Team</th>
+            <th>Module Name</th>
+            <th>Daily Date</th>
+            <th>Tasks on progress</th>
+            <th>Tasks completed</th>
+            <th>Impediments</th>
+            <th>Attendance</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var daily in Model)
+        {
+            <tr>
+                <td>@daily.Id</td>
+                @if(daily.Starter.Status == false)
+                {
+                    <td class="redtext">
+                        <img src="~/Images/@daily.Starter.ImageName"   
+                         class="rounded-circle"   
+                         height="50" width="50"   
+                         asp-append-version="true" /><br> 
+                        @daily.Starter.Name
+                    </td>
+                }
+                else
+                {
+                    <td>
+                        <img src="~/Images/@daily.Starter.ImageName"   
+                         class="rounded-circle"   
+                         height="50" width="50"   
+                         asp-append-version="true" /><br> 
+                        @daily.Starter.Name
+                    </td>
+                }
+                @if(daily.Starter.Group.Status == false)
+                {
+                    <td class="redtext">@daily.Starter.Group.GroupName</td>
+                }
+                else
+                {
+                    <td>@daily.Starter.Group.GroupName</td>
+                }
+                @if(daily.Module.Status == false)
+                {
+                    <td class="redtext">@daily.Module.Name</td>
+                }
+                else
+                {
+                    <td>@daily.Module.Name</td>
+                }                
+                <td>@daily.Date.ToShortDateString()</td>
+                <td>@daily.TasksDoing</td>
+                <td>@daily.TasksDone</td>
+                <td>@daily.Impediments</td>
+                <td>
+                    @if(@daily.Presence == 0)
+                    {
+                        <span>Absent</span>
+                    }
+                    else if(@daily.Presence == 1)
+                    {
+                        <span>Late</span>
+                    }
+                    else
+                    {
+                        <span>On time</span>
+                    }
+                    
+                </td>   
+                <td>
+                    <a class="btn btn-primary" href="/Management/EditDaily/@daily.Id">Edit</a>    
+                                                               
+                    <form asp-action="Delete" asp-controller="Dailies" style="display: inline;">
+                        <input type="hidden" name="id" id="id" value="@daily.Id">
+                        <button class="btn btn-danger">Delete</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

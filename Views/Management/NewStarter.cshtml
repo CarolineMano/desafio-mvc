@@ -1,0 +1,67 @@
+@model DESAFIO.MVC.DTO.StarterDTO
+
+<h3>New Starter</h3>
+<hr>
+
+<form enctype="multipart/form-data" class="form-horizontal" asp-controller="Starters" asp-action="Save" method="POST">
+    <input type="hidden" asp-for="Id" value="0">
+
+    <label asp-for="Name">Name</label><br>
+    <span asp-validation-for="Name"></span>
+    <input type="text" class="form-control" asp-for="Name" placeholder="Name">    
+
+    <br><label asp-for="FourCharacters">4-letter identifier</label><br>
+    <span asp-validation-for="FourCharacters"></span>
+    <input type="text" class="form-control" asp-for="FourCharacters" placeholder="XXXX">    
+
+    <br><label asp-for="StartProgramID">Start Program</label><br>
+    <span asp-validation-for="StartProgramID"></span>
+    @if((ViewBag.StartPrograms as IList<StartProgram>).Count == 0)
+    {
+        <p>There are no start programs available.</p>
+    }
+    else
+    {
+        <select class="form-control" asp-for="StartProgramID" asp-items='@(new SelectList(@ViewBag.StartPrograms, "Id", "Name"))'></select> 
+    }
+       
+    <br><label asp-for="GroupID">Scrum Team</label><br>
+    <span asp-validation-for="GroupID"></span>
+    @if((ViewBag.Groups as IList<Group>).Count == 0)
+    {
+        <p>There are no scrum teams available.</p>
+    }
+    else
+    {
+        <select class="form-control" asp-for="GroupID" asp-items='@(new SelectList(@ViewBag.Groups, "Id", "GroupName"))'></select><br>  
+    }
+
+    <div class="form-group">  
+        <label asp-for="Image" class="control-label">User Picture</label>  
+        <div class="custom-file">  
+            <input asp-for="Image" class="custom-file-input" id="customFile">  
+            <label class="custom-file-label" for="customFile">Choose file</label>  
+        </div>  
+    </div>  
+      
+    @if((ViewBag.StartPrograms as IList<StartProgram>).Count == 0 || (ViewBag.Groups as IList<Group>).Count == 0)
+    {
+        <button class="btn btn-success" disabled>Add</button>
+    }
+    else
+    {
+        <button class="btn btn-success">Add</button>
+    }    
+    <a class="btn btn-primary" href="/Management/Starters">Back</a>
+</form>
+
+
+@section scripts{  
+    <script type="text/javascript">  
+        // Add the following code if you want the name of the file appear on select  
+        $(".custom-file-input").on("change", function () {  
+            var fileName = $(this).val().split("\\").pop();  
+            $(this).siblings(".custom-file-label").addClass("selected").html(fileName);  
+        });  
+    </script>  
+}  

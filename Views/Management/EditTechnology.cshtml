@@ -1,0 +1,19 @@
+@model DESAFIO.MVC.DTO.TechnologyDTO
+
+<h3>Edit Technology</h3>
+<hr>
+
+<form class="form-horizontal" asp-controller="Technologies" asp-action="Update" method="POST">
+    <input type="hidden" asp-for="Id">
+
+    <label asp-for="Name">Name</label><br>
+    <span asp-validation-for="Name"></span>
+    <input type="text" class="form-control" asp-for="Name" placeholder="Technology name">
+    
+    <br><label asp-for="Description">Description</label><br>
+    <span asp-validation-for="Description"></span>
+    <input type="text" class="form-control" asp-for="Description" placeholder="Description of the technology"><br>
+
+    <button class="btn btn-success">Update</button>
+    <a class="btn btn-primary" href="/Management/Technologies">Back</a>  
+</form>
